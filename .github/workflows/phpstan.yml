@@ -26,11 +26,11 @@ jobs:
       - name: Checkout libBungeeCore
         uses: actions/checkout@v2
         with:
-        repository: iTheTrollIdk/libBungeeCore
-        token: ${{ secrets.TOKEN }}
-        submodules: true
-        path: vendor/libBungeeCore
-        ref: master
+          repository: iTheTrollIdk/libBungeeCore
+          token: ${{ secrets.TOKEN }}
+          submodules: true
+          path: vendor/libBungeeCore
+          ref: master
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Run PHPStan
         uses: nxtlvlsoftware/pmmp-phpstan-action@4
