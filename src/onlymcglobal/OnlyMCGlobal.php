@@ -5,12 +5,23 @@ declare(strict_types=1);
 namespace onlymcglobal;
 
 use libBungeeCore\BungeeCore;
+use onlymcglobal\listener\PlayerListener;
+use onlymcglobal\player\Player;
+use onlymcglobal\player\Scoreboard;
+use onlymcglobal\player\task\ScoreboardUpdateTask;
+use onlymcglobal\translation\TranslationFactory;
+use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
+use pocketmine\utils\Config;
+use pocketmine\utils\TextFormat;
 
 class OnlyMCGlobal extends PluginBase {
 
     /** @var OnlyMCGlobal */
     private static OnlyMCGlobal $instance;
+    /** @var Scoreboard */
+    private static Scoreboard $scoreboard;
 
     /**
      * @return OnlyMCGlobal
@@ -19,9 +30,52 @@ class OnlyMCGlobal extends PluginBase {
         return self::$instance;
     }
 
+    /**
+     * @return Scoreboard
+     */
+    public static function getScoreboard(): Scoreboard {
+        return self::$scoreboard;
+    }
+
     public function onEnable(): void {
         self::$instance = $this;
 
         BungeeCore::getInstance()->initThread();
+
+        TranslationFactory::getInstance()->init();
+
+        if (BungeeCore::isDefaultServer()) $this->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdateTask(), 20);
+
+        $this->registerListeners(new PlayerListener());
+    }
+
+    public function onDisable(): void {
+        foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+            if ($player instanceof Player) $player->connectNowFallback();
+        }
+    }
+
+    /**
+     * @param Listener ...$listeners
+     */
+    public function registerListeners(Listener ...$listeners): void {
+        foreach ($listeners as $listener) {
+            $this->getServer()->getPluginManager()->registerEvents($listener, $this);
+        }
+    }
+
+    /**
+     * @param string $config
+     * @return Config
+     */
+    public function getConfiguration(string $config): Config {
+        return new Config($this->getDataFolder() . $config);
+    }
+
+    /**
+     * @return string
+     */
+    public final static function getDefaultScoreboardFormat(): string {
+        return TextFormat::colorize(self::$instance->getConfig()->getNested('default-rank-data.default-scoreboard-format'));
     }
 }
