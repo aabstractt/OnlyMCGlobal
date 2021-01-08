@@ -1,0 +1,12 @@
+LOBBY_SCOREBOARD:
+  12: "",
+  11: " Rango: {0}"
+  10: " Conexión: &a{1}"
+  9: ""
+  8: " Baúles: &a{2}"
+  7: " Polvo Misterioso: &a{3}"
+  6: ""
+  5: " Lobby: &e#{4}"
+  4: " Conectados: &a{5}"
+  3: ""
+  2: "&e     mc.onlymc.us"

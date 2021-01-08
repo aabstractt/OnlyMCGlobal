@@ -15,6 +15,8 @@ class TranslationFactory {
     private array $translations = [];
 
     public function init(): void {
+        OnlyMCGlobal::getInstance()->saveResource('translations.yml');
+
         $this->translations = OnlyMCGlobal::getInstance()->getConfiguration('translations.yml')->getAll();
     }
 
