@@ -15,6 +15,10 @@ class Player extends \pocketmine\player\Player {
      * @param string $description
      */
     public function connectTo(string $description): void {
+        if (!BungeeCore::getInstance()->isConnected()) {
+            throw new PlayerException(PlayerException::BUNGEECORE_OFFLINE);
+        }
+
         BungeeCore::getInstance()->sendPacket(PlayerTransferPacket::create($this->getName(), $description));
     }
 
@@ -22,6 +26,10 @@ class Player extends \pocketmine\player\Player {
      * Force connect to a server fallback
      */
     public function connectNowFallback(): void {
+        if (!BungeeCore::getInstance()->isConnected()) {
+            throw new PlayerException(PlayerException::BUNGEECORE_OFFLINE);
+        }
+
         BungeeCore::getInstance()->sendPacket(ScriptSharePacket::create(BungeeCoreThread::SEND_TO_FALLBACK, [BungeeCore::getServerDescription()]));
     }
 
@@ -29,6 +37,10 @@ class Player extends \pocketmine\player\Player {
      * Force send to a lobby
      */
     public function disconnectNow(): void {
+        if (!BungeeCore::getInstance()->isConnected()) {
+            throw new PlayerException(PlayerException::BUNGEECORE_OFFLINE);
+        }
+
         BungeeCore::getInstance()->sendPacket(ScriptSharePacket::create(BungeeCoreThread::SEND_TO_LOBBY, [BungeeCore::getServerDescription()]));
     }
 }

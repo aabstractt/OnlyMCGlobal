@@ -8,6 +8,7 @@ use libBungeeCore\BungeeCore;
 use libBungeeCore\packet\ClientConnectionPacket;
 use onlymcglobal\listener\PlayerListener;
 use onlymcglobal\player\Player;
+use onlymcglobal\player\PlayerException;
 use onlymcglobal\player\Scoreboard;
 use onlymcglobal\player\task\ScoreboardUpdateTask;
 use onlymcglobal\translation\TranslationFactory;
@@ -53,8 +54,14 @@ class OnlyMCGlobal extends PluginBase {
     public function onDisable(): void {
         foreach (Server::getInstance()->getOnlinePlayers() as $player) {
             /** @var Player $player */
-            $player->connectNowFallback();
+            try {
+                $player->connectNowFallback();
+            } catch (PlayerException $e) {
+                $player->kick($e->getMessage());
+            }
         }
+
+        if (!BungeeCore::getInstance()->isConnected()) return;
 
         BungeeCore::getInstance()->sendPacket(ClientConnectionPacket::create(ClientConnectionPacket::CONNECTION_CLOSED, ClientConnectionPacket::CLIENT_SHUTDOWN));
     }

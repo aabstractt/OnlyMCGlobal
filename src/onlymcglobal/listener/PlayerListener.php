@@ -7,6 +7,7 @@ namespace onlymcglobal\listener;
 use libBungeeCore\BungeeCore;
 use onlymcglobal\OnlyMCGlobal;
 use onlymcglobal\player\Player;
+use onlymcglobal\player\PlayerException;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -31,6 +32,12 @@ class PlayerListener implements Listener {
     public function onPlayerJoinEvent(PlayerJoinEvent $ev): void {
         /** @var Player $player */
         $player = $ev->getPlayer();
+
+        if (!BungeeCore::getInstance()->isConnected()) {
+            $player->kick(PlayerException::BUNGEECORE_OFFLINE);
+
+            return;
+        }
 
         if (!BungeeCore::isDefaultServer()) return;
 
