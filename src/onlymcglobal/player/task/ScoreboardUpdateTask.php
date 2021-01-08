@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace onlymcglobal\player\task;
 
 use onlymcglobal\OnlyMCGlobal;
+use onlymcglobal\player\Player;
 use pocketmine\scheduler\Task;
 use pocketmine\Server;
 
@@ -15,6 +16,7 @@ class ScoreboardUpdateTask extends Task {
      */
     public function onRun(): void {
         foreach (Server::getInstance()->getOnlinePlayers() as $player) {
+            /** @var Player $player */
             OnlyMCGlobal::getScoreboard()->setLines([$player], [
                 10 => ' Conexión: &a' . $player->getNetworkSession()->getPing(),
                 4 => ' Conectados: &a' . count(Server::getInstance()->getOnlinePlayers())

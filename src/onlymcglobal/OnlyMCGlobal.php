@@ -40,7 +40,7 @@ class OnlyMCGlobal extends PluginBase {
     public function onEnable(): void {
         self::$instance = $this;
 
-        BungeeCore::getInstance()->initThread();
+        BungeeCore::getInstance()->init();
 
         TranslationFactory::getInstance()->init();
 
@@ -51,7 +51,8 @@ class OnlyMCGlobal extends PluginBase {
 
     public function onDisable(): void {
         foreach (Server::getInstance()->getOnlinePlayers() as $player) {
-            if ($player instanceof Player) $player->connectNowFallback();
+            /** @var Player $player */
+            $player->connectNowFallback();
         }
     }
 

@@ -29,6 +29,7 @@ class PlayerListener implements Listener {
      * @priority HIGHEST
      */
     public function onPlayerJoinEvent(PlayerJoinEvent $ev): void {
+        /** @var Player $player */
         $player = $ev->getPlayer();
 
         if (!BungeeCore::isDefaultServer()) return;
