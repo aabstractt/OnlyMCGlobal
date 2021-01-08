@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace onlymcglobal;
 
 use libBungeeCore\BungeeCore;
+use libBungeeCore\packet\ClientConnectionPacket;
 use onlymcglobal\listener\PlayerListener;
 use onlymcglobal\player\Player;
 use onlymcglobal\player\Scoreboard;
@@ -54,6 +55,8 @@ class OnlyMCGlobal extends PluginBase {
             /** @var Player $player */
             $player->connectNowFallback();
         }
+
+        BungeeCore::getInstance()->sendPacket(ClientConnectionPacket::create(ClientConnectionPacket::CONNECTION_CLOSED, ClientConnectionPacket::CLIENT_SHUTDOWN));
     }
 
     /**
