@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace onlymcglobal;
 
+use libBungeeCore\BungeeCore;
 use pocketmine\plugin\PluginBase;
 
 class OnlyMCGlobal extends PluginBase {
@@ -21,6 +22,6 @@ class OnlyMCGlobal extends PluginBase {
     public function onEnable(): void {
         self::$instance = $this;
 
-        //BungeeCore::getInstance()->initThread();
+        BungeeCore::getInstance()->initThread();
     }
 }
