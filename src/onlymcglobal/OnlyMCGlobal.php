@@ -53,8 +53,8 @@ class OnlyMCGlobal extends PluginBase {
 
     public function onDisable(): void {
         foreach (Server::getInstance()->getOnlinePlayers() as $player) {
-            /** @var Player $player */
             try {
+                /** @var Player $player */
                 $player->connectNowFallback();
             } catch (PlayerException $e) {
                 $player->kick($e->getMessage());
