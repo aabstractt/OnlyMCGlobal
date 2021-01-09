@@ -9,6 +9,7 @@ use libBungeeCore\packet\ClientConnectionPacket;
 use onlymcglobal\listener\PlayerListener;
 use onlymcglobal\player\Player;
 use onlymcglobal\player\PlayerException;
+use onlymcglobal\player\rank\RankFactory;
 use onlymcglobal\player\Scoreboard;
 use onlymcglobal\player\social\SocialFactory;
 use onlymcglobal\player\task\ScoreboardUpdateTask;
@@ -46,6 +47,8 @@ class OnlyMCGlobal extends PluginBase {
         BungeeCore::getInstance()->init();
 
         Translation::getInstance()->init();
+
+        RankFactory::getInstance()->init();
 
         SocialFactory::getInstance()->init();
 
