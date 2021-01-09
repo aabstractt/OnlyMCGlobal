@@ -7,7 +7,7 @@ namespace onlymcglobal\player\task;
 use libBungeeCore\BungeeCore;
 use onlymcglobal\OnlyMCGlobal;
 use onlymcglobal\player\Player;
-use onlymcglobal\translation\TranslationFactory;
+use onlymcglobal\translation\Translation;
 use pocketmine\scheduler\Task;
 use pocketmine\Server;
 
@@ -21,7 +21,7 @@ class ScoreboardUpdateTask extends Task {
             /** @var Player $player */
             $rankString = OnlyMCGlobal::getDefaultScoreboardFormat();
 
-            OnlyMCGlobal::getScoreboard()->setLines([$player], TranslationFactory::getInstance()->translateArray('LOBBY_SCOREBOARD_UPDATE', [
+            OnlyMCGlobal::getScoreboard()->setLines([$player], Translation::getInstance()->translateArray('LOBBY_SCOREBOARD_UPDATE', [
                 $rankString,
                 $player->getNetworkSession()->getPing(),
                 10,

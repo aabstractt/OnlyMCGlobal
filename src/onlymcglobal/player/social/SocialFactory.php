@@ -15,6 +15,10 @@ class SocialFactory {
     /** @var array<string, Party> */
     private array $partyStorage = [];
 
+    public function init(): void {
+
+    }
+
     /**
      * @param string $ownerName
      * @return Party

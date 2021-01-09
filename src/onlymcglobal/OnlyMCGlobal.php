@@ -10,8 +10,9 @@ use onlymcglobal\listener\PlayerListener;
 use onlymcglobal\player\Player;
 use onlymcglobal\player\PlayerException;
 use onlymcglobal\player\Scoreboard;
+use onlymcglobal\player\social\SocialFactory;
 use onlymcglobal\player\task\ScoreboardUpdateTask;
-use onlymcglobal\translation\TranslationFactory;
+use onlymcglobal\translation\Translation;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
@@ -44,7 +45,9 @@ class OnlyMCGlobal extends PluginBase {
 
         BungeeCore::getInstance()->init();
 
-        TranslationFactory::getInstance()->init();
+        Translation::getInstance()->init();
+
+        SocialFactory::getInstance()->init();
 
         if (BungeeCore::getInstance()->getCurrentServer()->isDefaultServer()) {
             $this->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdateTask(), 20);

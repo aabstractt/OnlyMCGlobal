@@ -7,7 +7,7 @@ namespace onlymcglobal\translation;
 use onlymcglobal\OnlyMCGlobal;
 use onlymcglobal\OnlyMCGlobalTrait;
 
-class TranslationFactory {
+class Translation {
 
     use OnlyMCGlobalTrait;
 
