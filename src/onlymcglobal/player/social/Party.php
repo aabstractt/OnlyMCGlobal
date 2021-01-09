@@ -7,6 +7,7 @@ namespace onlymcglobal\player\social;
 use libBungeeCore\BungeeCore;
 use libBungeeCore\BungeeServerInfo;
 use onlymcglobal\player\Player;
+use pocketmine\plugin\PluginException;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
@@ -30,6 +31,18 @@ class Party {
      */
     public function getOwnerName(): string {
         return $this->ownerName;
+    }
+
+    /**
+     * @return Player
+     */
+    public function getPlayerOwner(): Player {
+        /** @var Player|null $player */
+        if (($player = Server::getInstance()->getPlayerExact($this->getOwnerName())) !== null) {
+            return $player;
+        }
+
+        throw new PluginException('Party without owner');
     }
 
     /**
@@ -87,9 +100,7 @@ class Party {
             return;
         }
 
-        foreach ($this->getPlayers() as $player) {
-            $player->connectNow($serverInfo);
-        }
+        $this->getPlayerOwner()->connectNow($serverInfo);
     }
 
     /**
