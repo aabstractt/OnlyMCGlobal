@@ -32,12 +32,14 @@ class AsyncQueryUtils {
 
     /**
      * @param AsyncQuery $query
-     * @param callable $callback
+     * @param callable|null $callback
      *
      * @phpstan-param \Closure(AsyncQuery $query): void $callback
      */
-    public function submitQuery(AsyncQuery $query, callable $callback): void {
-        self::$callbacks[spl_object_hash($query)] = $callback;
+    public function submitQuery(AsyncQuery $query, callable $callback = null): void {
+        if ($callback !== null) {
+            self::$callbacks[spl_object_hash($query)] = $callback;
+        }
 
         $query->host = $this->host;
         $query->user = $this->username;
