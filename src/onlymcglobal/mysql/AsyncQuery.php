@@ -17,9 +17,9 @@ abstract class AsyncQuery extends AsyncTask {
     /** @var string */
     public string $password;
     /** @var string */
-    private string $database;
+    public string $database;
     /** @var int */
-    private int $port;
+    public int $port;
 
     final public function onRun(): void {
         try {

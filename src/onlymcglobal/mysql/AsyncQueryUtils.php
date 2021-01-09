@@ -12,10 +12,16 @@ class AsyncQueryUtils {
 
     use OnlyMCGlobalTrait;
 
+    /** @var string */
     private string $host;
+    /** @var string */
     private string $username;
+    /** @var string */
     private string $password;
+    /** @var string */
     private string $dbname;
+    /** @var int */
+    private int $port;
 
     /** @var callable[] */
     private static array $callbacks = [];
@@ -28,6 +34,10 @@ class AsyncQueryUtils {
         $this->username = $data['username'];
 
         $this->password = $data['password'];
+
+        $this->dbname = $data['dbname'];
+
+        $this->port = $data['port'];
     }
 
     /**
@@ -42,6 +52,8 @@ class AsyncQueryUtils {
         $query->host = $this->host;
         $query->user = $this->username;
         $query->password = $this->password;
+        $query->database = $this->dbname;
+        $query->port = $this->port;
 
         Server::getInstance()->getAsyncPool()->submitTask($query);
     }
