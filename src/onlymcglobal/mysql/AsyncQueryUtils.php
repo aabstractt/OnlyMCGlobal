@@ -33,6 +33,8 @@ class AsyncQueryUtils {
     /**
      * @param AsyncQuery $query
      * @param callable $callback
+     *
+     * @phpstan-param \Closure(AsyncQuery $query): void $callback
      */
     public function submitQuery(AsyncQuery $query, callable $callback): void {
         self::$callbacks[spl_object_hash($query)] = $callback;
