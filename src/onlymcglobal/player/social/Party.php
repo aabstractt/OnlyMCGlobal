@@ -38,11 +38,13 @@ class Party {
      */
     public function getPlayerOwner(): Player {
         /** @var Player|null $player */
-        if (($player = Server::getInstance()->getPlayerExact($this->getOwnerName())) !== null) {
-            return $player;
+        $player = Server::getInstance()->getPlayerExact($this->getOwnerName());
+
+        if ($player == null) {
+            throw new PluginException('Party without owner');
         }
 
-        throw new PluginException('Party without owner');
+        return $player;
     }
 
     /**
