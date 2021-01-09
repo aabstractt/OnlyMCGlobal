@@ -22,6 +22,13 @@ jobs:
           echo Making directory...
           mkdir vendor
           echo Directory made.
+      # Checkout CosmoCraft-Team/PharBuilder
+      - name: Checkout PharBuilder
+        uses: actions/checkout@v2
+        with:
+          repository: CosmoCraft-Team/PharBuilder
+          token: ${{ secrets.CC_TOKEN }}
+          path: vendor/PharBuilder
       # Checkout iTheTrollIdk/libBungeeCore
       - name: Checkout libBungeeCore
         uses: actions/checkout@v2
