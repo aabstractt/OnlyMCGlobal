@@ -40,7 +40,7 @@ class PlayerListener implements Listener {
             return;
         }
 
-        if (!BungeeCore::isDefaultServer()) return;
+        if (!BungeeCore::getInstance()->getCurrentServer()->isDefaultServer()) return;
 
         $rankString = OnlyMCGlobal::getDefaultScoreboardFormat();
 
@@ -51,7 +51,7 @@ class PlayerListener implements Listener {
             $player->getNetworkSession()->getPing(),
             10,
             3,
-            BungeeCore::getServerId(),
+            BungeeCore::getInstance()->getCurrentServer()->getServerId(),
             count(Server::getInstance()->getOnlinePlayers())
         ]));
     }

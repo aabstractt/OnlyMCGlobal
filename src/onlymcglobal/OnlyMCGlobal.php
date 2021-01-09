@@ -46,22 +46,26 @@ class OnlyMCGlobal extends PluginBase {
 
         TranslationFactory::getInstance()->init();
 
-        if (BungeeCore::isDefaultServer()) $this->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdateTask(), 20);
+        if (BungeeCore::getInstance()->getCurrentServer()->isDefaultServer()) {
+            $this->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdateTask(), 20);
+        }
 
         $this->registerListeners(new PlayerListener());
     }
 
     public function onDisable(): void {
+        if (!BungeeCore::getInstance()->isConnected()) return;
+
         foreach (Server::getInstance()->getOnlinePlayers() as $player) {
             try {
                 /** @var Player $player */
                 $player->connectNowFallback();
+
+                $player->sendMessage("§9BungeeCore> §6Transferring to a fallback server due to restart.");
             } catch (PlayerException $e) {
                 $player->kick($e->getMessage());
             }
         }
-
-        if (!BungeeCore::getInstance()->isConnected()) return;
 
         BungeeCore::getInstance()->sendPacket(ClientConnectionPacket::create(ClientConnectionPacket::CONNECTION_CLOSED, ClientConnectionPacket::CLIENT_SHUTDOWN));
     }

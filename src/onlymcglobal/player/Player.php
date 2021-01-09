@@ -6,20 +6,21 @@ namespace onlymcglobal\player;
 
 use libBungeeCore\BungeeCore;
 use libBungeeCore\BungeeCoreThread;
+use libBungeeCore\BungeeServerInfo;
 use libBungeeCore\packet\PlayerTransferPacket;
 use libBungeeCore\packet\ScriptSharePacket;
 
 class Player extends \pocketmine\player\Player {
 
     /**
-     * @param string $description
+     * @param BungeeServerInfo $serverInfo
      */
-    public function connectTo(string $description): void {
+    public function connectNow(BungeeServerInfo $serverInfo): void {
         if (!BungeeCore::getInstance()->isConnected()) {
             throw new PlayerException(PlayerException::BUNGEECORE_OFFLINE);
         }
 
-        BungeeCore::getInstance()->sendPacket(PlayerTransferPacket::create($this->getName(), $description));
+        BungeeCore::getInstance()->sendPacket(PlayerTransferPacket::create($this->getName(), $serverInfo->getServerDescription()));
     }
 
     /**
@@ -30,7 +31,7 @@ class Player extends \pocketmine\player\Player {
             throw new PlayerException(PlayerException::BUNGEECORE_OFFLINE);
         }
 
-        BungeeCore::getInstance()->sendPacket(ScriptSharePacket::create(BungeeCoreThread::SEND_TO_FALLBACK, [BungeeCore::getServerDescription()]));
+        BungeeCore::getInstance()->sendPacket(ScriptSharePacket::create(BungeeCoreThread::SEND_TO_FALLBACK, [BungeeCore::getInstance()->getCurrentServer()->getServerDescription()]));
     }
 
     /**
@@ -41,6 +42,6 @@ class Player extends \pocketmine\player\Player {
             throw new PlayerException(PlayerException::BUNGEECORE_OFFLINE);
         }
 
-        BungeeCore::getInstance()->sendPacket(ScriptSharePacket::create(BungeeCoreThread::SEND_TO_LOBBY, [BungeeCore::getServerDescription()]));
+        BungeeCore::getInstance()->sendPacket(ScriptSharePacket::create(BungeeCoreThread::SEND_TO_LOBBY, [BungeeCore::getInstance()->getCurrentServer()->getServerDescription()]));
     }
 }

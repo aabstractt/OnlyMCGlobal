@@ -26,7 +26,7 @@ class ScoreboardUpdateTask extends Task {
                 $player->getNetworkSession()->getPing(),
                 10,
                 3,
-                BungeeCore::getServerId(),
+                BungeeCore::getInstance()->getCurrentServer()->getServerId(),
                 count(Server::getInstance()->getOnlinePlayers())
             ]));
         }
