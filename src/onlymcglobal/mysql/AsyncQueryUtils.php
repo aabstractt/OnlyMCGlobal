@@ -33,8 +33,6 @@ class AsyncQueryUtils {
     /**
      * @param AsyncQuery $query
      * @param callable|null $callback
-     *
-     * @phpstan-param \Closure(AsyncQuery): void $callback
      */
     public function submitQuery(AsyncQuery $query, callable $callback = null): void {
         if ($callback !== null) {
