@@ -64,7 +64,7 @@ class RankFactory {
      * @return mysqli
      */
     public function initConnection(): ?mysqli {
-        if ($this->mysql === null) {
+        if ($this->mysql == null) {
             $this->mysql = new mysqli($this->host, $this->username, $this->password, $this->dbname, $this->port);
 
             if ($this->mysql->connect_error) return null;

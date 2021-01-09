@@ -168,25 +168,25 @@ class Rank {
     /**
      * @param string $format
      */
-    public function setOriginalFormat(string $format) {
+    public function setOriginalFormat(string $format): void {
         $this->data['format'] = $format;
     }
 
     /**
      * @param string $chatFormat
      */
-    public function setOriginalChatFormat(string $chatFormat) {
+    public function setOriginalChatFormat(string $chatFormat): void {
         $this->data['chat_format'] = $chatFormat;
     }
 
     /**
      * @param string $nametagFormat
      */
-    public function setOriginalNametag(string $nametagFormat) {
+    public function setOriginalNametag(string $nametagFormat): void {
         $this->data['nametag_format'] = $nametagFormat;
     }
 
-    public function updatePlayersPermissions() {
+    public function updatePlayersPermissions(): void {
         foreach(Server::getInstance()->getOnlinePlayers() as $player) {
             if (RankFactory::getInstance()->getPlayerRank($player->getName())->getName() === $this->getName()) {
                 // TODO Update player permissions
