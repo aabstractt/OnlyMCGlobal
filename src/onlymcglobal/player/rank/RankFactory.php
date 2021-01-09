@@ -128,7 +128,7 @@ class RankFactory {
             foreach($this->getPlayersWithRank($rank->getName()) as $targetData) {
                 $this->setPlayerRank($targetData['username']);
 
-                //Utils::calculatePlayerPermissions($targetData['username']);
+                $this->calculatePlayerPermissions($targetData['username']);
             }
         } catch (Exception $e) {
             OnlyMCGlobal::getInstance()->getLogger()->logException($e);
@@ -484,5 +484,20 @@ class RankFactory {
         }
 
         return false;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function calculatePlayerPermissions(string $name): void {
+        $player = Server::getInstance()->getPlayerByPrefix($name);
+
+        if ($player == null) return;
+
+        $rank = $this->getPlayerRank($player->getName());
+
+        if ($rank == null) return;
+
+        $player->setNameTag($rank->getOriginalNametagFormat($player->getName()));
     }
 }

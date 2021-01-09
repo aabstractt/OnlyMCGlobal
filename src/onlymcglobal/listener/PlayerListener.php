@@ -8,6 +8,7 @@ use libBungeeCore\BungeeCore;
 use onlymcglobal\OnlyMCGlobal;
 use onlymcglobal\player\Player;
 use onlymcglobal\player\PlayerException;
+use onlymcglobal\player\rank\RankFactory;
 use onlymcglobal\translation\Translation;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerCreationEvent;
@@ -44,7 +45,11 @@ class PlayerListener implements Listener {
 
         $rankString = OnlyMCGlobal::getDefaultScoreboardFormat();
 
-        //if ($rank !== null && !$rank->isDefault()) $rankString = $rank->getFormat();
+        $rank = RankFactory::getInstance()->getPlayerRank($player->getName());
+
+        if ($rank !== null && !$rank->isDefault()) $rankString = $rank->getFormat();
+
+        RankFactory::getInstance()->calculatePlayerPermissions($player->getName());
 
         OnlyMCGlobal::getScoreboard()->setLines([$player], Translation::getInstance()->translateArray('LOBBY_SCOREBOARD', [
             $rankString,

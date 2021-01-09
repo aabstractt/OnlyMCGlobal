@@ -189,7 +189,7 @@ class Rank {
     public function updatePlayersPermissions(): void {
         foreach(Server::getInstance()->getOnlinePlayers() as $player) {
             if (RankFactory::getInstance()->getPlayerRank($player->getName())->getName() === $this->getName()) {
-                // TODO Update player permissions
+                RankFactory::getInstance()->calculatePlayerPermissions($player->getName());
             }
         }
     }

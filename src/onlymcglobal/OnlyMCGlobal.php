@@ -53,6 +53,8 @@ class OnlyMCGlobal extends PluginBase {
         SocialFactory::getInstance()->init();
 
         if (BungeeCore::getInstance()->getCurrentServer()->isDefaultServer()) {
+            self::$scoreboard = new Scoreboard('&f&lONLY&bMC', Scoreboard::SIDEBAR);
+
             $this->getScheduler()->scheduleRepeatingTask(new ScoreboardUpdateTask(), 20);
         }
 
